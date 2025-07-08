@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TaskManager.Data.Entities;
 using TaskManager.Data.Repositories;
 

@@ -3,6 +3,7 @@ using TaskManager.Data.Entities;
 using TaskManager.Data.Tasks;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace TaskManager.Infra
 {
@@ -24,6 +25,27 @@ namespace TaskManager.Infra
                 .HasValue<DevelopmentTask>(TaskType.Development);
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<AuditableEntity>();
+            var now = DateTime.UtcNow;
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = now;
+                }
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = now;
+                    // UpdatedBy should be set by the service/controller before SaveChangesAsync
+                }
+            }
+            //cancellation of tasks, such as database operations, HTTP requests, or long-running loops.
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }   
