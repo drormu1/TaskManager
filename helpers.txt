@@ -1,0 +1,12 @@
+
+
+https://localhost:7211/swagger
+
+http://localhost:5198/swagger
+
+
+http://localhost:5198/api/admin/ping
+
+
+
+dotnet ef migrations add 08-07-2025-19-09 --project TaskManager.Infra --startup-project TaskManager.APIServer

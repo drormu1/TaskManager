@@ -4,6 +4,6 @@ namespace TaskManager.Data.Entities
     {
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int? UpdatedBy { get; set; } // UserId, nullable
+        public int? UpdatedById { get; set; } // UserId, nullable
     }
 }

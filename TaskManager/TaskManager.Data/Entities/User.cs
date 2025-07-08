@@ -1,9 +1,9 @@
 namespace TaskManager.Data.Entities
 {
-    public class User
+    public class User  : AuditableEntity
     {
         public int Id { get; set; }
         public string UserName { get; set; } = string.Empty;
-        public ICollection<TaskBase> Tasks { get; set; } = new List<TaskBase>();
+        public ICollection<ManagedTask> ManagedTasks  { get; set; } = new List<ManagedTask>();
     }
 }

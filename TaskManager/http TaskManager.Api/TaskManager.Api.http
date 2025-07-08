@@ -1,0 +1,8 @@
+@TaskManager_Api_HostAddress = http://localhost:5126
+
+### Initialize the database
+POST {{TaskManager_Api_HostAddress}}/api/admin/init
+Content-Type: application/json
+
+### Check if API is up
+GET {{TaskManager_Api_HostAddress}}/api/admin/ping

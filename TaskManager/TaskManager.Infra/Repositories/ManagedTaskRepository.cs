@@ -5,73 +5,73 @@ using TaskManager.Data.Repositories;
 
 namespace TaskManager.Infra.Repositories
 {
-    public class TaskRepository : ITaskRepository
+    public class ManagedTaskRepository : IManagedTaskRepository
     {
         private readonly AppDbContext _context;
-        private readonly ILogger<TaskRepository> _logger;
+        private readonly ILogger<ManagedTaskRepository> _logger;
 
-        public TaskRepository(AppDbContext context, ILogger<TaskRepository> logger)
+        public ManagedTaskRepository(AppDbContext context, ILogger<ManagedTaskRepository> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public async Task<TaskBase?> GetByIdAsync(int id)
+        public async Task<ManagedTask?> GetByIdAsync(int id)
         {
             try
             {
-                return await _context.Tasks
+                return await _context.ManagedTasks
                     .Include(t => t.AssignedUser)
                     .Include(t => t.StatusHistory)
                     .FirstOrDefaultAsync(t => t.Id == id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching task by id {TaskId}", id);
+                _logger.LogError(ex, "Error fetching managed task by id {TaskId}", id);
                 throw;
             }
         }
 
-        public async Task<IEnumerable<TaskBase>> GetAllAsync()
+        public async Task<IEnumerable<ManagedTask>> GetAllAsync()
         {
             try
             {
-                return await _context.Tasks
+                return await _context.ManagedTasks
                     .Include(t => t.AssignedUser)
                     .Include(t => t.StatusHistory)
                     .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching all tasks");
+                _logger.LogError(ex, "Error fetching all managed tasks");
                 throw;
             }
         }
 
-        public async Task AddAsync(TaskBase task)
+        public async Task AddAsync(ManagedTask task)
         {
             try
             {
-                _context.Tasks.Add(task);
+                _context.ManagedTasks.Add(task);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error adding task");
+                _logger.LogError(ex, "Error adding managed task");
                 throw;
             }
         }
 
-        public async Task UpdateAsync(TaskBase task)
+        public async Task UpdateAsync(ManagedTask task)
         {
             try
             {
-                _context.Tasks.Update(task);
+                _context.ManagedTasks.Update(task);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating task");
+                _logger.LogError(ex, "Error updating managed task");
                 throw;
             }
         }
@@ -80,16 +80,16 @@ namespace TaskManager.Infra.Repositories
         {
             try
             {
-                var task = await _context.Tasks.FindAsync(id);
+                var task = await _context.ManagedTasks.FindAsync(id);
                 if (task != null)
                 {
-                    _context.Tasks.Remove(task);
+                    _context.ManagedTasks.Remove(task);
                     await _context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting task {TaskId}", id);
+                _logger.LogError(ex, "Error deleting managed task {TaskId}", id);
                 throw;
             }
         }

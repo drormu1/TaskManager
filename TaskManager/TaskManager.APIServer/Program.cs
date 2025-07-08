@@ -7,17 +7,13 @@ using TaskManager.Logic.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+ConfigureLogger(builder);
 
-// Dependency injection configuration
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IManagedTaskRepository, ManagedTaskRepository>();
-builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+RegisterService(builder);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,11 +30,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapControllers();
 //app.UseHttpsRedirection();
 
 logger.LogInformation("Application is ready to handle requests.");
 app.Run();
+
+static void RegisterService(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IManagedTaskRepository, ManagedTaskRepository>();
+    builder.Services.AddScoped<IAdminService, AdminService>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<ITaskTypeRepository, TaskTypeRepository>();
+    builder.Services.AddScoped<ITaskStatusRepository, TaskStatusRepository>();
+}
+
+static void ConfigureLogger(WebApplicationBuilder builder)
+{
+    builder.Logging.ClearProviders();
+    builder.Logging.AddConsole();
+    builder.Logging.AddDebug();
+}
 
 //dotnet ef migrations add InitialCreate --project TaskManager.Infra --startup-project TaskManager.Api
 //dotnet ef database update --project TaskManager.Infra --startup-project TaskManager.Api

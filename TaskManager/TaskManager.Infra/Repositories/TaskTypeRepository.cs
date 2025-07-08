@@ -5,71 +5,71 @@ using TaskManager.Data.Repositories;
 
 namespace TaskManager.Infra.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class TaskTypeRepository : ITaskTypeRepository
     {
         private readonly AppDbContext _context;
-        private readonly ILogger<UserRepository> _logger;
+        private readonly ILogger<TaskTypeRepository> _logger;
 
-        public UserRepository(AppDbContext context, ILogger<UserRepository> logger)
+        public TaskTypeRepository(AppDbContext context, ILogger<TaskTypeRepository> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public async Task<User?> GetByIdAsync(int id)
+        public async Task<TaskType?> GetByIdAsync(int id)
         {
             try
             {
-                return await _context.Users
-                    .Include(u => u.ManagedTasks)
-                    .FirstOrDefaultAsync(u => u.Id == id);
+                return await _context.Set<TaskType>()
+                    .Include(t => t.Statuses)
+                    .FirstOrDefaultAsync(t => t.Id == id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching user by id {UserId}", id);
+                _logger.LogError(ex, "Error fetching task type by id {Id}", id);
                 throw;
             }
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<TaskType>> GetAllAsync()
         {
             try
             {
-                return await _context.Users
-                    .Include(u => u.ManagedTasks)
+                return await _context.Set<TaskType>()
+                    .Include(t => t.Statuses)
                     .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching all users");
+                _logger.LogError(ex, "Error fetching all task types");
                 throw;
             }
         }
 
-        public async Task AddAsync(User user)
+        public async Task AddAsync(TaskType type)
         {
             try
             {
-                _context.Users.Add(user);
+                _context.Set<TaskType>().Add(type);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error adding user");
+                _logger.LogError(ex, "Error adding task type");
                 throw;
             }
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task UpdateAsync(TaskType type)
         {
             try
             {
-                _context.Users.Update(user);
+                _context.Set<TaskType>().Update(type);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating user");
+                _logger.LogError(ex, "Error updating task type");
                 throw;
             }
         }
@@ -78,16 +78,16 @@ namespace TaskManager.Infra.Repositories
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
-                if (user != null)
+                var type = await _context.Set<TaskType>().FindAsync(id);
+                if (type != null)
                 {
-                    _context.Users.Remove(user);
+                    _context.Set<TaskType>().Remove(type);
                     await _context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting user {UserId}", id);
+                _logger.LogError(ex, "Error deleting task type {Id}", id);
                 throw;
             }
         }
