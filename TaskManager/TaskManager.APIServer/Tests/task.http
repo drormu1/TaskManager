@@ -27,6 +27,7 @@ Content-Type: application/json
   "title": "Implement Task Status Validation",
   "description": "Add validator pattern to enforce task status rules",
   "taskTypeId": 2,
+  "UpdatedById" : 2,
   "taskStatusId": 1,
   "assignedUserId": 3,
   "taskDataJson": "{}"
