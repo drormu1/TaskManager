@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.Logic.Services;
+using TaskManager.Logic;
 
 namespace TaskManager.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //todo: add authorization and authentication guard
     public class AdminController : ControllerBase
     {
-        private readonly IAdminService _adminService;
+        private readonly IAdminLogic _adminService;
 
-        public AdminController(IAdminService adminService)
+        public AdminController(IAdminLogic adminService)
         {
             _adminService = adminService;
         }

@@ -1,0 +1,61 @@
+@TaskManager_APIServer_HostAddress = http://localhost:5198
+
+### Get all tasks for a user
+GET {{TaskManager_APIServer_HostAddress}}/api/task/user/1
+
+### Get a specific task by ID
+GET {{TaskManager_APIServer_HostAddress}}/api/task/1
+
+### Create a new procurement task
+POST {{TaskManager_APIServer_HostAddress}}/api/task
+Content-Type: application/json
+
+{
+  "title": "Office Supplies Order",
+  "description": "Order new monitors for dev team",
+  "taskTypeId": 1,
+  "taskStatusId": 1,
+  "assignedUserId": 1,
+  "taskDataJson": "{}"
+}
+
+### Create a new development task
+POST {{TaskManager_APIServer_HostAddress}}/api/task
+Content-Type: application/json
+
+{
+  "title": "Implement Task Status Validation",
+  "description": "Add validator pattern to enforce task status rules",
+  "taskTypeId": 2,
+  "taskStatusId": 1,
+  "assignedUserId": 3,
+  "taskDataJson": "{}"
+}
+
+### Change task status - forward
+POST {{TaskManager_APIServer_HostAddress}}/api/task/1/status/2
+Content-Type: application/json
+
+### Change task status with specific data - procurement task to supplier offers received
+POST {{TaskManager_APIServer_HostAddress}}/api/task/1/status/2
+Content-Type: application/json
+
+{
+  "taskDataJson": "{\"priceQuotes\":[{\"supplier\":\"SupplierA\",\"price\":500},{\"supplier\":\"SupplierB\",\"price\":450}]}"
+}
+
+### Change task status with specific data - development task to specification completed
+POST {{TaskManager_APIServer_HostAddress}}/api/task/2/status/2
+Content-Type: application/json
+
+{
+  "taskDataJson": "{\"specification\":\"Full specification document for task validation\"}"
+}
+
+### Change task status - backward
+POST {{TaskManager_APIServer_HostAddress}}/api/task/1/status/1
+Content-Type: application/json
+
+### Close a task
+POST {{TaskManager_APIServer_HostAddress}}/api/task/1/close
+Content-Type: application/json

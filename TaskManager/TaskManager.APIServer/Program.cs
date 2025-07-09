@@ -2,13 +2,24 @@ using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.Repositories;
 using TaskManager.Infra;
 using TaskManager.Infra.Repositories;
-using TaskManager.Logic.Services;
+using TaskManager.Logic;
+using TaskManager.Logic.TaskTypes;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging
 ConfigureLogger(builder);
 
+
+// Configure CORS for all origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -18,6 +29,9 @@ RegisterService(builder);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -39,10 +53,16 @@ app.Run();
 static void RegisterService(WebApplicationBuilder builder)
 {
     builder.Services.AddScoped<IManagedTaskRepository, ManagedTaskRepository>();
-    builder.Services.AddScoped<IAdminService, AdminService>();
+    builder.Services.AddScoped<IAdminLogic, AdminLogic>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<ITaskTypeRepository, TaskTypeRepository>();
     builder.Services.AddScoped<ITaskStatusRepository, TaskStatusRepository>();
+    builder.Services.AddScoped<ITaskLogic, TaskLogic>();
+    // Register your validators and factory
+    builder.Services.AddScoped<ITaskTypeValidator, ProcurementTaskValidator>();
+    builder.Services.AddScoped<ITaskTypeValidator, DevelopmentTaskValidator>();
+    builder.Services.AddScoped<ITaskTypeValidatorFactory, TaskTypeValidatorFactory>();
+    builder.Services.AddScoped<ITaskStatusHistoryRepository, TaskStatusHistoryRepository>();
 }
 
 static void ConfigureLogger(WebApplicationBuilder builder)
@@ -51,6 +71,3 @@ static void ConfigureLogger(WebApplicationBuilder builder)
     builder.Logging.AddConsole();
     builder.Logging.AddDebug();
 }
-
-//dotnet ef migrations add InitialCreate --project TaskManager.Infra --startup-project TaskManager.Api
-//dotnet ef database update --project TaskManager.Infra --startup-project TaskManager.Api

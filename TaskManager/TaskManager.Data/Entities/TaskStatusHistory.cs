@@ -1,6 +1,6 @@
 namespace TaskManager.Data.Entities
 {
-    public class TaskStatusHistory  : AuditableEntity
+    public class TaskStatusHistory  : Audit
     {
         public int Id { get; set; }
         public int TaskId { get; set; }

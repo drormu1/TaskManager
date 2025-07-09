@@ -12,8 +12,8 @@ using TaskManager.Infra;
 namespace TaskManager.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250708174436_08-07-2025-20-44")]
-    partial class _080720252044
+    [Migration("20250709074731_09-07-2025-10-47")]
+    partial class _090720251047
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace TaskManager.Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("TaskDataJson")
@@ -112,6 +115,9 @@ namespace TaskManager.Infra.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ManagedTaskId")
                         .HasColumnType("int");
 
@@ -173,6 +179,9 @@ namespace TaskManager.Infra.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");

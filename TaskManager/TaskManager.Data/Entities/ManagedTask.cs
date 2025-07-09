@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TaskManager.Data.Entities
 {
-    public class ManagedTask : AuditableEntity
+    public class ManagedTask : Audit
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: taskmanager_sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Aa123456!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"  # Maps host port 1433 to container port 1433
+    volumes:
+      - taskmanager_sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Aa123456! -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  taskmanager_sqlserver_data:
+    driver: local

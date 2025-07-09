@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TaskManager.Infra;    
+using TaskManager.Infra;
 
-namespace TaskManager.Logic.Services
+namespace TaskManager.Logic
 {
-    public class AdminService : IAdminService
+    public class AdminLogic : IAdminLogic
     {
         private readonly AppDbContext _context;
-        private readonly ILogger<AdminService> _logger;
+        private readonly ILogger<AdminLogic> _logger;
 
-        public AdminService(AppDbContext context, ILogger<AdminService> logger)
+        public AdminLogic(AppDbContext context, ILogger<AdminLogic> logger)
         {
             _context = context;
             _logger = logger;

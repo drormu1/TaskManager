@@ -43,6 +43,9 @@ namespace TaskManager.Infra.Migrations
                     b.Property<bool>("IsClosed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("TaskDataJson")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,6 +112,9 @@ namespace TaskManager.Infra.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ManagedTaskId")
                         .HasColumnType("int");
 
@@ -170,6 +176,9 @@ namespace TaskManager.Infra.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");

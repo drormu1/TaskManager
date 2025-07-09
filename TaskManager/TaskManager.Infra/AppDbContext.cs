@@ -50,7 +50,7 @@ namespace TaskManager.Infra
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var entries = ChangeTracker.Entries<AuditableEntity>();
+            var entries = ChangeTracker.Entries<Audit>();
             var now = DateTime.UtcNow;
 
             foreach (var entry in entries)

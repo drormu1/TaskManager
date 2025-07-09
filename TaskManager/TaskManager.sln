@@ -9,13 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Data", "TaskMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Logic", "TaskManager.Logic\TaskManager.Logic.csproj", "{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Api", "TaskManager.Api\TaskManager.Api.csproj", "{0DA11866-A461-4D53-AFD4-FEC3C893BC19}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Web", "TaskManager.Web\TaskManager.Web.csproj", "{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.React", "TaskManager.React\TaskManager.React.csproj", "{4048EB87-B396-40ED-858B-A99B370372AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.APIServer", "TaskManager.APIServer\TaskManager.APIServer.csproj", "{C691E94D-1408-4A78-81BC-0D2D6A01364A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-commands.txt = docker-commands.txt
+		docker-compose.yml = docker-compose.yml
+		ef - make migration file.bat = ef - make migration file.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,18 +68,6 @@ Global
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x64.Build.0 = Release|Any CPU
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x86.ActiveCfg = Release|Any CPU
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x86.Build.0 = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|x64.Build.0 = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Debug|x86.Build.0 = Debug|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|x64.ActiveCfg = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|x64.Build.0 = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|x86.ActiveCfg = Release|Any CPU
-		{0DA11866-A461-4D53-AFD4-FEC3C893BC19}.Release|x86.Build.0 = Release|Any CPU
 		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|x64.ActiveCfg = Debug|Any CPU

@@ -1,6 +1,6 @@
 namespace TaskManager.Data.Entities
 {
-    public class User  : AuditableEntity
+    public class User  : Audit
     {
         public int Id { get; set; }
         public string UserName { get; set; } = string.Empty;
