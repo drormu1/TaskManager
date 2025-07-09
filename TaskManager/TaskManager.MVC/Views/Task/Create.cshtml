@@ -1,0 +1,65 @@
+@model TaskManager.Logic.DTOs.ManagedTaskDto  
+
+@{  
+    ViewData["Title"] = "Create Task";  
+}  
+
+<h1>Create New Task</h1>  
+
+<div class="row">  
+    <div class="col-md-8">  
+        <form asp-action="Create">  
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+
+            <div class="mb-3">  
+                <label asp-for="Title" class="form-label"></label>  
+                <input asp-for="Title" class="form-control" required />  
+                <span asp-validation-for="Title" class="text-danger"></span>  
+            </div>  
+
+            <div class="mb-3">  
+                <label asp-for="Description" class="form-label"></label>  
+                <textarea asp-for="Description" class="form-control" rows="3" required></textarea>  
+                <span asp-validation-for="Description" class="text-danger"></span>  
+            </div>  
+
+            <div class="row mb-3">  
+                <div class="col-md-4">  
+                    <label asp-for="TaskTypeId" class="form-label">Task Type</label>  
+                    <select asp-for="TaskTypeId" class="form-select">  
+                        <option value="1">Procurement</option>  
+                        <option value="2">Development</option>  
+                    </select>  
+                    <span asp-validation-for="TaskTypeId" class="text-danger"></span>  
+                </div>  
+
+                <div class="col-md-4">  
+                    <label asp-for="AssignedUserId" class="form-label">Assigned User ID</label>  
+                    <input asp-for="AssignedUserId" class="form-control" type="number" min="1" required />  
+                    <span asp-validation-for="AssignedUserId" class="text-danger"></span>  
+                </div>  
+
+                <div class="col-md-4">  
+                    <label asp-for="TaskStatusId" class="form-label">Status ID</label>  
+                    <input asp-for="TaskStatusId" class="form-control" value="1" readonly />  
+                    <span asp-validation-for="TaskStatusId" class="text-danger"></span>  
+                </div>  
+            </div>  
+
+            <div class="mb-3">  
+                <label asp-for="TaskDataJson" class="form-label">Task Data (JSON)</label>  
+                <textarea asp-for="TaskDataJson" class="form-control" rows="5"></textarea>  
+                <span asp-validation-for="TaskDataJson" class="text-danger"></span>  
+            </div>  
+
+            <div class="mb-3">  
+                <button type="submit" class="btn btn-primary">Create</button>  
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>  
+            </div>  
+        </form>  
+    </div>  
+</div>  
+
+@section Scripts {  
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}  
+}

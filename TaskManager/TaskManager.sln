@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Data", "TaskMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Logic", "TaskManager.Logic\TaskManager.Logic.csproj", "{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Web", "TaskManager.Web\TaskManager.Web.csproj", "{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.React", "TaskManager.React\TaskManager.React.csproj", "{4048EB87-B396-40ED-858B-A99B370372AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.APIServer", "TaskManager.APIServer\TaskManager.APIServer.csproj", "{C691E94D-1408-4A78-81BC-0D2D6A01364A}"
@@ -21,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{02EA681E
 		docker-compose.yml = docker-compose.yml
 		ef - make migration file.bat = ef - make migration file.bat
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.MVC", "TaskManager.MVC\TaskManager.MVC.csproj", "{1B820D38-97EF-2E0F-B171-C14CC97391AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,18 +68,6 @@ Global
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x64.Build.0 = Release|Any CPU
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x86.ActiveCfg = Release|Any CPU
 		{57C90397-9C3E-433B-9FAB-DB77DEC33E3A}.Release|x86.Build.0 = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|x64.Build.0 = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Debug|x86.Build.0 = Debug|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|x64.ActiveCfg = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|x64.Build.0 = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|x86.ActiveCfg = Release|Any CPU
-		{3FCF0071-2F07-4C6B-873A-2DCE01BB1946}.Release|x86.Build.0 = Release|Any CPU
 		{4048EB87-B396-40ED-858B-A99B370372AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4048EB87-B396-40ED-858B-A99B370372AE}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{4048EB87-B396-40ED-858B-A99B370372AE}.Debug|x64.Build.0 = Debug|Any CPU
@@ -103,6 +91,18 @@ Global
 		{C691E94D-1408-4A78-81BC-0D2D6A01364A}.Release|x64.Build.0 = Release|Any CPU
 		{C691E94D-1408-4A78-81BC-0D2D6A01364A}.Release|x86.ActiveCfg = Release|Any CPU
 		{C691E94D-1408-4A78-81BC-0D2D6A01364A}.Release|x86.Build.0 = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|x64.Build.0 = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|x64.Build.0 = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{1B820D38-97EF-2E0F-B171-C14CC97391AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

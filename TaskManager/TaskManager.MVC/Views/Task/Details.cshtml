@@ -1,0 +1,47 @@
+@model TaskManager.Logic.DTOs.ManagedTaskDto
+
+
+
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<h1>Task Details</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3>@Model.Title</h3>
+        @if (Model.IsClosed)
+        {
+            <span class="badge bg-secondary">Closed</span>
+        }
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Task ID:</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+            
+            @* Only show if present in DTO *@
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <dt class="col-sm-3">Description:</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+            }
+            
+            <dt class="col-sm-3">Type:</dt>
+            <dd class="col-sm-9">@Model.TaskTypeName</dd>
+            
+            <dt class="col-sm-3">Status:</dt>
+            <dd class="col-sm-9">@Model.TaskStatusName</dd>
+            
+            <dt class="col-sm-3">Assigned To:</dt>
+            <dd class

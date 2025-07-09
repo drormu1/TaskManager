@@ -1,0 +1,76 @@
+@model IEnumerable<TaskManager.Logic.DTOs.ManagedTaskDto>
+
+@{
+    ViewData["Title"] = "Task List";
+}
+
+<h1>Tasks</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get">
+            <div class="input-group">
+                <span class="input-group-text">User ID:</span>
+                <input type="number" class="form-control" name="userId" value="@ViewBag.UserId" min="1" />
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        <a asp-action="Create" class="btn btn-success">Create New Task</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Assigned To</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7" class="text-center">No tasks found</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                        <td>@item.TaskTypeName</td>
+                    <td>
+                        @item.TaskStatusName
+                        @if (item.IsClosed)
+                        {
+                            <span class="badge bg-secondary">Closed</span>
+                        }
+                    </td>
+                    <td>@item.AssignedUserName</td>
+                    <td>@item.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

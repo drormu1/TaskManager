@@ -1,0 +1,50 @@
+@model TaskManager.Logic.DTOs.TaskStatusUpdateDto
+
+@{
+    ViewData["Title"] = "Change Task Status";
+    var task = ViewBag.Task as TaskManager.Logic.DTOs.ManagedTaskDto;
+}
+
+<h1>Change Task Status</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Task: @task?.Title</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    <strong>Current Status:</strong>
+                    @(task?.TaskStatusName ?? $"Status {task?.TaskStatusId}")
+                </p>
+                <p>@task?.Description</p>
+            </div>
+        </div>
+
+        <form asp-action="ChangeStatus" asp-route-id="@task?.Id" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="NewStatusId" class="form-label"></label>
+                <input asp-for="NewStatusId" class="form-control" min="1" required />
+                <span asp-validation-for="NewStatusId" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="TaskDataJson" class="form-label"></label>
+                <textarea asp-for="TaskDataJson" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="TaskDataJson" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Change Status</button>
+                <a asp-action="Details" asp-route-id="@task?.Id" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

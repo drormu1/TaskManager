@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Data.Entities;
 using TaskManager.Logic;
+using TaskManager.Logic.DTOs;
 
 namespace TaskManager.APIServer.Controllers
 {
@@ -15,12 +16,35 @@ namespace TaskManager.APIServer.Controllers
             _taskLogic = taskLogic;
         }
 
-        // Get all tasks for a user
+        // Helper method to map entity to DTO
+        private ManagedTaskDto MapToDto(ManagedTask task)
+        {
+            return new ManagedTaskDto
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                TaskTypeId = task.TaskTypeId,
+                TaskTypeName = task.TaskType?.Name ?? "Unknown",
+                TaskStatusId = task.TaskStatusId,
+                TaskStatusName = task.TaskStatus?.Name ?? "Unknown",
+                IsClosed = task.IsClosed,
+                AssignedUserId = task.AssignedUserId,
+                AssignedUserName = task.AssignedUser?.UserName ?? "Unknown",
+                TaskDataJson = task.TaskDataJson,
+                CreatedAt = task.CreatedAt,
+                UpdatedAt = task.UpdatedAt,
+                UpdatedById = task.UpdatedById,
+                IsDeleted = task.IsDeleted
+            };
+        }
+
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetTasksForUser(int userId)
         {
             var tasks = await _taskLogic.GetTasksForUserAsync(userId);
-            return Ok(tasks);
+            var dtos = tasks.Select(MapToDto);
+            return Ok(dtos);
         }
 
         // Create a new task
@@ -28,7 +52,7 @@ namespace TaskManager.APIServer.Controllers
         public async Task<IActionResult> Create([FromBody] ManagedTask task)
         {
             var created = await _taskLogic.CreateAsync(task);
-            return StatusCode(201, created);
+            return StatusCode(201, MapToDto(created));
         }
 
         [HttpGet("{id}")]
@@ -36,16 +60,15 @@ namespace TaskManager.APIServer.Controllers
         {
             var task = await _taskLogic.GetByIdAsync(id);
             if (task == null) return NotFound();
-            return Ok(task);
+            return Ok(MapToDto(task));
         }
 
-        // Change task status
         [HttpPost("{taskId}/status/{newStatusId}")]
-        public async Task<IActionResult> ChangeStatus(int taskId, int newStatusId)
+        public async Task<IActionResult> ChangeStatus(int taskId, int newStatusId, [FromBody] TaskStatusUpdateDto updateDto)
         {
-            var updated = await _taskLogic.ChangeStatusAsync(taskId, newStatusId);
+            var updated = await _taskLogic.ChangeStatusAsync(taskId, newStatusId, updateDto?.NextAssignedUserId);
             if (updated == null) return BadRequest("Invalid status transition or task is closed.");
-            return Ok(updated);
+            return Ok(MapToDto(updated));
         }
 
         // Close a task
