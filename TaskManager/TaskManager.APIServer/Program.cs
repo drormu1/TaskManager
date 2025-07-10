@@ -57,13 +57,18 @@ app.Run();
 
 static void RegisterService(WebApplicationBuilder builder)
 {
+    builder.Services.AddScoped<IStatusService, StatusService>();
     builder.Services.AddScoped<IManagedTaskRepository, ManagedTaskRepository>();
     builder.Services.AddScoped<IAdminLogic, AdminLogic>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<ITaskTypeRepository, TaskTypeRepository>();
     builder.Services.AddScoped<ITaskStatusRepository, TaskStatusRepository>();
     builder.Services.AddScoped<ITaskLogic, TaskLogic>();
-    // Register your validators and factory
+
+
+    builder.Services.AddScoped<ProcurementTaskValidator>();
+    builder.Services.AddScoped<DevelopmentTaskValidator>();
+
     builder.Services.AddScoped<ITaskTypeValidator, ProcurementTaskValidator>();
     builder.Services.AddScoped<ITaskTypeValidator, DevelopmentTaskValidator>();
     builder.Services.AddScoped<ITaskTypeValidatorFactory, TaskTypeValidatorFactory>();

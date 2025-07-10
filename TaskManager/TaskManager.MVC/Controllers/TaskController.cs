@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 using TaskManager.Logic.DTOs;
 using TaskManager.MVC.Models;
 using TaskManager.MVC.Services;
@@ -11,7 +12,7 @@ namespace TaskManager.MVC.Controllers
         private readonly ITaskService _taskService;
         private readonly ILogger<TaskController> _logger;
 
-        public TaskController(ITaskService taskService,ILogger<TaskController> logger)
+        public TaskController(ITaskService taskService, ILogger<TaskController> logger)
         {
             _taskService = taskService;
             _logger = logger;
@@ -58,7 +59,8 @@ namespace TaskManager.MVC.Controllers
         public async Task<IActionResult> Create()
         {
             try
-            {
+            {         
+
                 IEnumerable<UserDto> users = await _taskService.GetAllUsersAsync();
                 ViewBag.Users = new SelectList(users, "Id", "UserName");
                 ViewBag.UpdatedByUsers = new SelectList(users, "Id", "UserName");
@@ -91,6 +93,12 @@ namespace TaskManager.MVC.Controllers
             try
             {
                 var createdTask = await _taskService.CreateAsync(task);
+
+                var firstStatus = (await _taskService.GetAllStatusesAsync())
+                      .FirstOrDefault(s => s.TaskTypeId == task.TaskTypeId)?.Id;
+
+                createdTask.TaskStatusId = firstStatus.Value;
+
                 TempData["SuccessMessage"] = "Task created successfully.";
                 return RedirectToAction(nameof(Details), new { id = createdTask.Id });
             }
@@ -112,7 +120,33 @@ namespace TaskManager.MVC.Controllers
                 {
                     return NotFound();
                 }
-                
+                // Get all statuses for the task's type, ordered by Order
+                var allStatuses = (await _taskService.GetAllStatusesAsync())
+                    .Where(s => s.TaskTypeId == task.TaskTypeId)
+                    .OrderBy(s => s.OrderId)
+                    .ToList();
+
+                // Find the current status
+                var currentStatus = allStatuses.FirstOrDefault(s => s.Id == task.TaskStatusId);
+                //if (currentStatus == null)
+                //{
+                //    TempData["ErrorMessage"] = "Current status not found.";
+                //    return RedirectToAction(nameof(Details), new { id });
+                //}
+
+                // Previous + current statuses
+                var prevs = allStatuses.Where(s => s.OrderId < currentStatus.OrderId).ToList();
+
+                // Next status (if any)
+                var next = allStatuses.FirstOrDefault(s => s.OrderId > currentStatus.OrderId);
+
+                // Combine for dropdown
+                var statusList = prevs.ToList();
+                if (next != null)
+                    statusList.Add(next);
+
+                ViewBag.Statuses = new SelectList(statusList, "Id", "Name", task.TaskStatusId);
+
                 ViewBag.Task = task;
                 var model = new TaskStatusUpdateModel();
                 return View(model);

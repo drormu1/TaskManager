@@ -1,4 +1,4 @@
-@model TaskManager.Logic.DTOs.TaskStatusUpdateDto
+@model TaskManager.MVC.Models.TaskStatusUpdateModel
 
 @{
     ViewData["Title"] = "Change Task Status";
@@ -24,10 +24,9 @@
 
         <form asp-action="ChangeStatus" asp-route-id="@task?.Id" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <div class="mb-3">
                 <label asp-for="NewStatusId" class="form-label"></label>
-                <input asp-for="NewStatusId" class="form-control" min="1" required />
+                <select asp-for="NewStatusId" class="form-select" asp-items="ViewBag.Statuses"></select>
                 <span asp-validation-for="NewStatusId" class="text-danger"></span>
             </div>
             
@@ -45,6 +44,3 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -20,9 +20,10 @@ namespace TaskManager.Api.Controllers
         {
             return Ok("API is up");
         }
-        [HttpPost("init")]
+        [HttpGet("init")]
         public async Task<IActionResult> Init()
         {
+            
             var result = await _adminService.InitializeDatabaseAsync();
             if (result)
                 return Ok("Database initialized");

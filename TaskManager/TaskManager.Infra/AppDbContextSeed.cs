@@ -18,17 +18,17 @@ namespace TaskManager.Infra
 
                 var procurementStatuses = new List<TaskStatus>
                 {
-                    new Data.Entities.TaskStatus { Name = "Open", Order = 1, TaskType = procurementType },
-                    new TaskStatus { Name = "WaitingForApproval", Order = 2, TaskType = procurementType },
-                    new TaskStatus { Name = "Closed", Order = 3, TaskType = procurementType }
+                    new Data.Entities.TaskStatus { Name = "Created", Order = 1, TaskType = procurementType },
+                    new TaskStatus { Name = "SupplierOfferReceived ", Order = 2, TaskType = procurementType },
+                    new TaskStatus { Name = "PurchaseCompleted", Order = 3, TaskType = procurementType }
                 };
 
                 var developmentStatuses = new List<TaskStatus>
                 {
-                    new TaskStatus { Name = "Open", Order = 1, TaskType = developmentType },
-                    new TaskStatus { Name = "InProgress", Order = 2, TaskType = developmentType },
-                    new TaskStatus { Name = "Review", Order = 3, TaskType = developmentType },
-                    new TaskStatus { Name = "Closed", Order = 4, TaskType = developmentType }
+                    new TaskStatus { Name = "Created", Order = 1, TaskType = developmentType },
+                    new TaskStatus { Name = "SpecificationCompleted", Order = 2, TaskType = developmentType },
+                    new TaskStatus { Name = "DevelopmentCompleted", Order = 3, TaskType = developmentType },
+                    new TaskStatus { Name = "DistributionCompleted", Order = 4, TaskType = developmentType }
                 };
 
                 context.Set<TaskType>().AddRange(procurementType, developmentType);

@@ -16,17 +16,21 @@ namespace TaskManager.Logic.TaskTypes
             {
                 var jsonDoc = JsonDocument.Parse(managedTask.TaskDataJson);
 
+                //todo
+                //implement validation logic based on task type and status transition per taskType  !!!
+                                
+
                 // 1 (Created) → 2 (Specification completed): needs specification
-                if (fromStatus.Order == 1 && toStatus.Order == 2)
-                    return jsonDoc.RootElement.TryGetProperty("specification", out var _);
+                //if (fromStatus.Order == 1 && toStatus.Order == 2)
+                //    return jsonDoc.RootElement.TryGetProperty("specification", out var _);
 
-                // 2 (Specification completed) → 3 (Development completed): needs branch
-                if (fromStatus.Order == 2 && toStatus.Order == 3)
-                    return jsonDoc.RootElement.TryGetProperty("branch", out var _);
+                //// 2 (Specification completed) → 3 (Development completed): needs branch
+                //if (fromStatus.Order == 2 && toStatus.Order == 3)
+                //    return jsonDoc.RootElement.TryGetProperty("branch", out var _);
 
-                // 3 (Development completed) → 4 (Distribution completed): needs version
-                if (fromStatus.Order == 3 && toStatus.Order == 4)
-                    return jsonDoc.RootElement.TryGetProperty("version", out var _);
+                //// 3 (Development completed) → 4 (Distribution completed): needs version
+                //if (fromStatus.Order == 3 && toStatus.Order == 4)
+                //    return jsonDoc.RootElement.TryGetProperty("version", out var _);
             }
             catch
             {

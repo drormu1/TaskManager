@@ -12,7 +12,6 @@ namespace TaskManager.MVC.Services
         Task<ManagedTaskDto?> CloseTaskAsync(int taskId);
 
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
-
-
+        Task<IEnumerable<StatusDto>> GetAllStatusesAsync();
     }
 }

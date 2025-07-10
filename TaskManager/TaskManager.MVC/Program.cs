@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using TaskManager.Logic.TaskTypes;
 using TaskManager.MVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,12 @@ builder.Services.AddHttpClient<ITaskService, TaskService>((sp, client) =>
     client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
 
+
+
 // Add services to the container
+//builder.Services.AddScoped<ITaskTypeValidator, ProcurementTaskValidator>();
+//builder.Services.AddScoped<ITaskTypeValidator, DevelopmentTaskValidator>();
+//builder.Services.AddScoped<ITaskTypeValidatorFactory, TaskTypeValidatorFactory>();
 builder.Services.AddControllersWithViews();
 
 //// Configure HttpClient for API communication

@@ -39,6 +39,7 @@
             <th>Status</th>
             <th>Assigned To</th>
             <th>Created</th>
+            <th>State</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -58,16 +59,22 @@
                     <td>@item.Title</td>
                         <td>@item.TaskTypeName</td>
                     <td>
-                        @item.TaskStatusName
+                        @item.TaskStatusName                       
+                    </td>
+                    <td>@item.AssignedUserName</td>
+                    <td>@item.CreatedAt.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>                       
                         @if (item.IsClosed)
                         {
                             <span class="badge bg-secondary">Closed</span>
                         }
                     </td>
-                    <td>@item.AssignedUserName</td>
-                    <td>@item.CreatedAt.ToString("yyyy-MM-dd")</td>
                     <td>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        @if (!item.IsClosed)
+                        {
+                            <a asp-action="ChangeStatus" asp-route-id="@item.Id" class="btn btn-warning btn-sm ms-1">Change Status</a>
+                        }
                     </td>
                 </tr>
             }
