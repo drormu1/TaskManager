@@ -12,8 +12,8 @@ using TaskManager.Infra;
 namespace TaskManager.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250709074731_09-07-2025-10-47")]
-    partial class _090720251047
+    [Migration("20250710174952_10-07-2025-20-09")]
+    partial class _100720252009
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -4,5 +4,4 @@
 GET {{TaskManager_APIServer_HostAddress}}/api/admin/ping
 
 ### Initialize the database
-POST {{TaskManager_APIServer_HostAddress}}/api/admin/init
-Content-Type: application/json
+GET  {{TaskManager_APIServer_HostAddress}}/api/admin/init
