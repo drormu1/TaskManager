@@ -65,7 +65,7 @@ export const CreateTask: React.FC<{ onCreate: (task: any) => void; onCancel?: ()
           >
             <option value="">Select...</option>
             {users.map((user: any) => (
-              <option key={user.id} value={user.id}>{user.name}</option>
+              <option key={user.id} value={user.id}>{user.userName}</option>
             ))}
           </select>
         </label>
@@ -126,7 +126,7 @@ export const CreateTask: React.FC<{ onCreate: (task: any) => void; onCancel?: ()
             >
               <option value="">Select...</option>
               {users.map((user: any) => (
-                <option key={user.id} value={user.id}>{user.name}</option>
+                <option key={user.id} value={user.id}>{user.userName}</option>
               ))}
             </select>
           </label>
