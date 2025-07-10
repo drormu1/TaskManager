@@ -30,11 +30,8 @@
 
             <div class="row mb-3">  
                 <div class="col-md-4">  
-                    <label asp-for="TaskTypeId" class="form-label">Task Type</label>  
-                    <select asp-for="TaskTypeId" class="form-select">  
-                        <option value="1">Procurement</option>  
-                        <option value="2">Development</option>  
-                    </select>  
+                    <label asp-for="TaskTypeId" class="form-label">Task Type</label>
+                    <select asp-for="TaskTypeId" class="form-select" asp-items="ViewBag.TaskTypes"></select>
                     <span asp-validation-for="TaskTypeId" class="text-danger"></span>  
                 </div>  
 

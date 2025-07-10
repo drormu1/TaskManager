@@ -41,6 +41,14 @@ namespace TaskManager.MVC.Services
             return await response.Content.ReadFromJsonAsync<IEnumerable<StatusDto>>() ?? Enumerable.Empty<StatusDto>();
         }
 
+        public async Task<IEnumerable<TaskTypeDto>> GetAllTaskTypesAsync()
+        {
+            var response = await _httpClient.GetAsync("api/tasktype");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<TaskTypeDto>>() ?? Enumerable.Empty<TaskTypeDto>();
+        }
+
+
         public async Task<IEnumerable<ManagedTaskDto>> GetTasksForUserAsync(int userId)
   {
             try

@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigureLogger(builder);
 
 
-// Configure CORS for all origins
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -49,6 +48,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
+app.UseAuthorization();
+app.MapControllers();
 app.MapControllers();
 //app.UseHttpsRedirection();
 
@@ -64,7 +67,7 @@ static void RegisterService(WebApplicationBuilder builder)
     builder.Services.AddScoped<ITaskTypeRepository, TaskTypeRepository>();
     builder.Services.AddScoped<ITaskStatusRepository, TaskStatusRepository>();
     builder.Services.AddScoped<ITaskLogic, TaskLogic>();
-
+    builder.Services.AddScoped<ITaskTypeService, TaskTypeService>();
 
     builder.Services.AddScoped<ProcurementTaskValidator>();
     builder.Services.AddScoped<DevelopmentTaskValidator>();

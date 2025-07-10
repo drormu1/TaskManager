@@ -64,7 +64,9 @@ namespace TaskManager.MVC.Controllers
                 IEnumerable<UserDto> users = await _taskService.GetAllUsersAsync();
                 ViewBag.Users = new SelectList(users, "Id", "UserName");
                 ViewBag.UpdatedByUsers = new SelectList(users, "Id", "UserName");
-
+                
+                var taskTypes = await _taskService.GetAllTaskTypesAsync();
+                ViewBag.TaskTypes = new SelectList(taskTypes, "Id", "Name");
                 return View(new ManagedTaskDto
                 {
                     TaskStatusId = 1,
@@ -92,12 +94,11 @@ namespace TaskManager.MVC.Controllers
 
             try
             {
-                var createdTask = await _taskService.CreateAsync(task);
-
                 var firstStatus = (await _taskService.GetAllStatusesAsync())
-                      .FirstOrDefault(s => s.TaskTypeId == task.TaskTypeId)?.Id;
+                 .FirstOrDefault(s => s.TaskTypeId == task.TaskTypeId)?.Id;
+                task.TaskStatusId = firstStatus.Value;
 
-                createdTask.TaskStatusId = firstStatus.Value;
+                var createdTask = await _taskService.CreateAsync(task);
 
                 TempData["SuccessMessage"] = "Task created successfully.";
                 return RedirectToAction(nameof(Details), new { id = createdTask.Id });

@@ -13,5 +13,7 @@ namespace TaskManager.MVC.Services
 
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
         Task<IEnumerable<StatusDto>> GetAllStatusesAsync();
+
+        Task<IEnumerable<TaskTypeDto>> GetAllTaskTypesAsync();
     }
 }
