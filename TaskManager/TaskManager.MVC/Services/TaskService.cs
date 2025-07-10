@@ -8,13 +8,13 @@ using TaskManager.MVC.Models;
 
 namespace TaskManager.MVC.Services
 {
-    public class ApiTaskService : ITaskService
+    public class TaskService : ITaskService
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;
-        private readonly ILogger<ApiTaskService> _logger;
+        private readonly ILogger<TaskService> _logger;
 
-        public ApiTaskService(HttpClient httpClient, ILogger<ApiTaskService> logger)
+        public TaskService(HttpClient httpClient, ILogger<TaskService> logger)
         {
             _httpClient = httpClient;
             _logger = logger;
@@ -25,6 +25,15 @@ namespace TaskManager.MVC.Services
                 ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
             };
         }
+
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
+        {
+             
+            var response = await _httpClient.GetAsync("api/user");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IEnumerable<UserDto>>() ?? Enumerable.Empty<UserDto>();
+        }
+
 
         public async Task<IEnumerable<ManagedTaskDto>> GetTasksForUserAsync(int userId)
   {
@@ -66,18 +75,15 @@ namespace TaskManager.MVC.Services
 
         public async Task<ManagedTaskDto> CreateAsync(ManagedTaskDto task)
         {
-            try
+            var response = await _httpClient.PostAsJsonAsync("api/task", task);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.PostAsJsonAsync("api/task", task, _jsonOptions);
-                response.EnsureSuccessStatusCode();
-                
-                var result = await response.Content.ReadFromJsonAsync<ManagedTaskDto>(_jsonOptions);
-                return result!;
+                return await response.Content.ReadFromJsonAsync<ManagedTaskDto>();
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "Error creating task");
-                throw;
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception(error); // This will be caught in your MVC controller
             }
         }
 

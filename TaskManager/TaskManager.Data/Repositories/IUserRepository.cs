@@ -2,6 +2,10 @@ using TaskManager.Data.Entities;
 
 namespace TaskManager.Data.Repositories
 {
+}
+
+namespace TaskManager.Data.Repositories
+{
     public interface IUserRepository
     {
         Task<User?> GetByIdAsync(int id);

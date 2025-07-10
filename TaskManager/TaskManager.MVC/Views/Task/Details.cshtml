@@ -44,4 +44,19 @@
             <dd class="col-sm-9">@Model.TaskStatusName</dd>
             
             <dt class="col-sm-3">Assigned To:</dt>
-            <dd class
+            <dd class="col-sm-9">@Model.AssignedUserName</dd>
+            
+            <dt class="col-sm-3">Created At:</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("g")</dd>
+            
+            <dt class="col-sm-3">Updated At:</dt>
+            <dd class="col-sm-9">@Model.UpdatedAt?.ToString("g")</dd>
+            
+            <dt class="col-sm-3">Is Deleted:</dt>
+            <dd class="col-sm-9">@Model.IsDeleted</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

@@ -12,21 +12,23 @@ namespace TaskManager.Logic
         private readonly ITaskStatusRepository _statusRepository;
         private readonly ILogger<TaskLogic> _logger;
         private readonly ITaskTypeValidatorFactory _validatorFactory;
-        
+        private readonly IUserRepository _userRepository; // Add this line
 
-    public TaskLogic(
-        IManagedTaskRepository taskRepository,
-        ITaskStatusRepository statusRepository,
-        ILogger<TaskLogic> logger,
-        ITaskTypeValidatorFactory validatorFactory) // Add this parameter
-    {
-        _taskRepository = taskRepository;
-        _statusRepository = statusRepository;
-        _logger = logger;
-        _validatorFactory = validatorFactory;
-    }
+        public TaskLogic(
+            IManagedTaskRepository taskRepository,
+            ITaskStatusRepository statusRepository,
+            ILogger<TaskLogic> logger,
+            ITaskTypeValidatorFactory validatorFactory,
+            IUserRepository userRepository) // Add this parameter
+        {
+            _taskRepository = taskRepository;
+            _statusRepository = statusRepository;
+            _logger = logger;
+            _validatorFactory = validatorFactory;
+            _userRepository = userRepository; // Assign here
+        }
 
-    public async Task<ManagedTask?> ChangeStatusAsync(int taskId, int newStatusId, int? nextAssignedUserId = null)
+        public async Task<ManagedTask?> ChangeStatusAsync(int taskId, int newStatusId, int? nextAssignedUserId = null)
     {
         var managedTask = await _taskRepository.GetByIdAsync(taskId);
         if (managedTask == null || managedTask.IsClosed)
@@ -97,6 +99,11 @@ namespace TaskManager.Logic
 
         public async Task<ManagedTask> CreateAsync(ManagedTask task)
         {
+            // Validate user existence
+            var user = await _userRepository.GetByIdAsync(task.AssignedUserId);
+            if (user == null) // Fix: Check for null instead of using '!'
+                throw new ArgumentException("Assigned user does not exist.");
+
             await _taskRepository.AddAsync(task);
             return task;
         }

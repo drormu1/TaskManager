@@ -21,6 +21,8 @@ namespace TaskManager.Infra.Repositories
             try
             {
                 return await _context.ManagedTasks
+                    .Include(t => t.TaskType)
+                    .Include(t => t.TaskStatus)
                     .Include(t => t.AssignedUser)
                     .Include(t => t.StatusHistory)
                     .FirstOrDefaultAsync(t => t.Id == id);
@@ -37,6 +39,8 @@ namespace TaskManager.Infra.Repositories
             try
             {
                 return await _context.ManagedTasks
+                    .Include(t => t.TaskType)
+                    .Include(t => t.TaskStatus)
                     .Include(t => t.AssignedUser)
                     .Include(t => t.StatusHistory)
                     .ToListAsync();

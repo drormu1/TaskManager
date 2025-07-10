@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TaskManager.Logic.DTOs;
 using TaskManager.MVC.Models;
 using TaskManager.MVC.Services;
@@ -10,7 +11,7 @@ namespace TaskManager.MVC.Controllers
         private readonly ITaskService _taskService;
         private readonly ILogger<TaskController> _logger;
 
-        public TaskController(ITaskService taskService, ILogger<TaskController> logger)
+        public TaskController(ITaskService taskService,ILogger<TaskController> logger)
         {
             _taskService = taskService;
             _logger = logger;
@@ -54,14 +55,27 @@ namespace TaskManager.MVC.Controllers
         }
 
         // GET: Task/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(new ManagedTaskDto
-            { 
-                TaskStatusId = 1, 
-                AssignedUserId = 1,
-                TaskDataJson = "{}" 
-            });
+            try
+            {
+                IEnumerable<UserDto> users = await _taskService.GetAllUsersAsync();
+                ViewBag.Users = new SelectList(users, "Id", "UserName");
+                ViewBag.UpdatedByUsers = new SelectList(users, "Id", "UserName");
+
+                return View(new ManagedTaskDto
+                {
+                    TaskStatusId = 1,
+                    AssignedUserId = users.FirstOrDefault()?.Id ?? 1,
+                    TaskDataJson = "{}"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving users for task creation");
+                TempData["ErrorMessage"] = "An error occurred while retrieving users.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: Task/Create
@@ -83,7 +97,7 @@ namespace TaskManager.MVC.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating task");
-                ModelState.AddModelError("", "An error occurred while creating the task.");
+                ModelState.AddModelError("", ex.Message); // This will show the actual error from the API
                 return View(task);
             }
         }

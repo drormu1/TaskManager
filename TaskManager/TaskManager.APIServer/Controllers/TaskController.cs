@@ -51,8 +51,16 @@ namespace TaskManager.APIServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ManagedTask task)
         {
-            var created = await _taskLogic.CreateAsync(task);
-            return StatusCode(201, MapToDto(created));
+            try
+            {
+                var created = await _taskLogic.CreateAsync(task);
+                return StatusCode(201, MapToDto(created));
+            }
+            catch (ArgumentException ex)
+            {
+                // Return a 400 Bad Request with your custom error message
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
